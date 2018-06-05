@@ -1,0 +1,7 @@
+logging_db:
+  schema: chestshop
+  user: user
+  password: pass
+  table_prefix: ''
+  url: jdbc:mysql://localhost
+  ping_seconds: 120

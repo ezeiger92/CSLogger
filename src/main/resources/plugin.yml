@@ -1,0 +1,8 @@
+name: CSLogger
+main: com.chromaclypse.chestshop.CSLogger
+version: ${project.version}
+description: ChestShop Logger
+author: ezeiger92
+depend: [ChromaLib]
+commands: {}
+permissions: {}
