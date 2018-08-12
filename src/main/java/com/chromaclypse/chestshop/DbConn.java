@@ -23,11 +23,14 @@ public class DbConn {
 			throw new IllegalArgumentException("Could not connect to database! Please check that your settings are correct");
 		
 		boolean hasDb = true;
-		try {
-			conn.prepareStatement("CREATE DATABASE IF NOT EXISTS `"+db.schema+"`").executeUpdate();
-		} catch (SQLException e) {
-			hasDb = false;
-			e.printStackTrace();
+		
+		if(!db.url.startsWith("jdbc:sqlite")) {
+			try {
+				conn.prepareStatement("CREATE DATABASE IF NOT EXISTS `"+db.schema+"`").executeUpdate();
+			} catch (SQLException e) {
+				hasDb = false;
+				e.printStackTrace();
+			}
 		}
 		
 		try {
@@ -76,9 +79,12 @@ public class DbConn {
 		if(conn == null) {
 			try {
 				Properties props = new Properties();
-				props.setProperty("user", config.user);
-				props.setProperty("password", config.password);
-				props.setProperty("useSSL", String.valueOf(false));
+				
+				if(!config.url.startsWith("jdbc:sqlite")) {
+					props.setProperty("user", config.user);
+					props.setProperty("password", config.password);
+					props.setProperty("useSSL", String.valueOf(false));
+				}
 				
 				conn = DriverManager.getConnection(config.url, props);
 			} catch (SQLException e) {
